@@ -47,3 +47,13 @@ exports.checkPassword = (user, password) => {
 
   return false;
 }
+
+exports.getUserById = async (id) => { 
+  const data = await User.findById(id);
+
+  if (!data) { 
+    false
+  }
+
+  return data.toObject();
+}
