@@ -11,7 +11,18 @@ const UserReducer = (state = initialState, action) => {
       return { ...state }
     }
     case "signup": { 
-      return { ...state }
+      return {
+        ...state,
+        data: action.payload,
+        loading: false
+      }
+    }
+    case "error": { 
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
     }
     default: { 
       return { ...state }
