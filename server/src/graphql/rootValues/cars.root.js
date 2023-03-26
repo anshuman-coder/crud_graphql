@@ -15,6 +15,29 @@ module.exports = {
       return error
     }
   },
+  getMyCars: async ({ page }, {request }) => {
+    try {
+      const { pageIndex, pageSize } = page;
+      const userId = request._id;
+
+      const myCars = await carFuncs.getMyCars(userId, pageIndex, pageSize);
+
+      return myCars;
+      
+    } catch (error) {
+      return error
+    }
+  },
+  getCarById: async ({ id }, { request }) => { 
+    const userId = request._id;
+    console.log(id)
+    const carData = await carFuncs.getCarById(id, userId);
+
+    if (!carData) { 
+      throw new Error(getError(errorName.NOT_FOUND));
+    }
+    return carData
+  },
   addCar: async ({ name, description, imageURL }, { request }, context) => { 
     try {
       const userId = request._id;
@@ -24,6 +47,13 @@ module.exports = {
       return createNewCar;
     } catch (error) {
       return error;
+    }
+  },
+  editCar: async ({ id, data }) => { 
+    try {
+      
+    } catch (error) {
+      return error
     }
   }
 }
