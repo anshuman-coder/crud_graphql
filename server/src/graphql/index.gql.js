@@ -6,5 +6,9 @@ module.exports = {
   users: {
     schema: require("./schema/users.schema"),
     rootValue: require("./rootValues/users.root")
+  },
+  cars: {
+    schema: require("./schema/cars.schema"),
+    rootValue: require("./rootValues/cars.root")
   }
 };

@@ -13,6 +13,7 @@ exports.authentication = async (req, res, next) => {
         if (err) {
           throw new Error(getError(errorName.UNAUTHORIZED));
         }
+        // console.log(AuthData);
         const checkUser = await userFuncs.getUserById(AuthData._id);
 
         if (!checkUser) {
