@@ -51,7 +51,9 @@ module.exports = {
   },
   editCar: async ({ id, data }) => { 
     try {
-      
+      const result = await carFuncs.editCar(id, data);
+
+      return result;
     } catch (error) {
       return error
     }

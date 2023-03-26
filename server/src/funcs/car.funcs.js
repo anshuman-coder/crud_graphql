@@ -110,3 +110,17 @@ exports.getCarById = async (id, userId) => {
 
   return false;
 }
+
+exports.editCar = async (id, data) => { 
+  let values = {};
+
+  for (const [key, value] of Object.entries(data)) { 
+    values[key] = value;
+  }
+
+  const update = await Cars.findByIdAndUpdate(id, values);
+
+  const updatedValue = await this.getCarById(id);
+
+  return updatedValue;
+}
