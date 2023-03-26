@@ -18,6 +18,7 @@ const CarGqlSchema = buildSchema(`
     description: String
     imageURL: String
     isActive: Boolean
+    isOwner: Boolean
   }
 
   input pagination {

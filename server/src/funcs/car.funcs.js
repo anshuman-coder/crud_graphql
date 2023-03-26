@@ -12,3 +12,34 @@ exports.addCar = async (name, description, imageURL, userId) => {
 
   return data.toObject();
 }
+
+exports.getAllCars = async (userId, pageIndex, pageSize) => {
+
+  const offset = pageIndex * pageSize;
+  const data = await Cars.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "_id",
+        as: "user"
+      }
+    },
+    { $skip: offset },
+    { $limit: pageSize },
+    {
+      $addFields: {
+        isOwner: { 
+          $cond: {
+            if: { $eq: ["$userId", userId] },
+            then: true,
+            else: false
+          }
+        }
+      }
+    }
+    
+  ]);
+
+  return data;
+}
