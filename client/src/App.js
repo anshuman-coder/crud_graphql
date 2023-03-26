@@ -1,10 +1,18 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Login, SignUp, Home, User, Car } from "./Pages";
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/user/:id' element={<User />} />
+        <Route path='/car/:id' element={<Car />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
