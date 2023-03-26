@@ -52,8 +52,31 @@ exports.getUserById = async (id) => {
   const data = await User.findById(id);
 
   if (!data) { 
-    false
+    return false
   }
 
   return data.toObject();
+}
+
+exports.updateUser = async (id, data) => { 
+  let values = {}
+  for (const [key, value] of Object.entries(data)) { 
+    if (key == "password") {
+      values[key] = crypto.createHash("md5").update(value).digest("hex");
+    } else { 
+      values[key] = value
+    }
+  }
+
+  const result = await User.findByIdAndUpdate(id, values);
+
+  const updatedUser = await this.getUserById(result._id);
+
+  return updatedUser;
+}
+
+exports.deleteUser = async (id) => { 
+  const result = await User.findByIdAndDelete(id);
+
+  return result.toObject();
 }

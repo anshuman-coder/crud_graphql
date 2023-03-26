@@ -7,7 +7,7 @@ exports.authentication = async (req, res, next) => {
   try {
     const auth = req.headers["authorization"];
 
-    if (typeof auth != undefined) {
+    if (auth) {
       token = auth.split(" ")[1];
       jwt.verify(token, process.env.AUTH_SECRET_KEY, async (err, AuthData) => {
         if (err) {
@@ -20,12 +20,13 @@ exports.authentication = async (req, res, next) => {
         }
 
         req.user = checkUser;
-        next();
+        return next();
       })
     } else { 
       throw new Error(getError(errorName.UNAUTHORIZED));
     }
   } catch (error) {
-    return error;
+    console.log(error)
+    return res.status(400).json(error.message)
   }
 }
