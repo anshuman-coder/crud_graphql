@@ -8,7 +8,12 @@ const initialState = {
 const UserReducer = (state = initialState, action) => { 
   switch (action.type) { 
     case "login": { 
-      return { ...state }
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+        error: null
+      }
     }
     case "signup": { 
       return {
@@ -22,6 +27,14 @@ const UserReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload
+      }
+    }
+    case "logout": { 
+      return {
+        ...state,
+        loading: false,
+        data: action.payload,
+        error: null
       }
     }
     default: { 

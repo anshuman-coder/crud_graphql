@@ -3,13 +3,34 @@ import { LoginSignClient } from "../../GraphqlClient";
 
 export const LoginUser = ({ email, password }) => {
   return async dispatch => {
-    dispatch({
-      type: "login",
-      payload: {
-        name: "Anshuman Singh",
-        userName: "Anshuman-coder"
-      }
-    });
+    try {
+      let result = await LoginSignClient.mutate({
+        mutation: gql`
+        mutation loginUser($email: String!, $password: String!) {
+            login(email: $email, password: $password) {
+              _id,
+              fullName,
+              email,
+              token
+            }
+          }
+        `,
+        variables: {
+          email,
+          password
+        }
+      });
+
+      result = await result.data;
+      result = result.login;
+      localStorage.setItem(process.env.REACT_APP_LOCAL, JSON.stringify(result));
+      dispatch({
+        type: "login",
+        payload: result
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -48,5 +69,15 @@ export const SignUpUser = ({ fullName, email, password }) => {
         payload: JSON.parse(error.message)
       });
     }
+  }
+}
+
+export const logoutUser = () => { 
+  return async dispatch => { 
+    localStorage.removeItem(process.env.REACT_APP_LOCAL);
+    dispatch({
+      type: "logout",
+      payload: null
+    });
   }
 }

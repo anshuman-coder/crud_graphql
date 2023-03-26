@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { SideBar } from "./components";
 
 const Home = () => {
 
@@ -8,14 +9,17 @@ const Home = () => {
     //checking the token
     const localKey = process.env.REACT_APP_LOCAL;
     const user = JSON.parse(localStorage.getItem(localKey))
-    console.log(user)
+    // console.log(user)
     if (!user?.token) { 
       return navigate("/login");
     }
   })
 
   return (
-    <div>Home</div>
+    <div className='flex'>
+      <SideBar />
+      {/* <Header /> */}
+    </div>
   )
 }
 

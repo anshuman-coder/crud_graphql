@@ -1,21 +1,50 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import { LoginUser } from '../Redux/actions/loginSignUp.action';
+
+const initialForm = {
+  email: "",
+  password: ""
+};
 
 function Login() {
+
+  const [formData, setFormData] = useState(initialForm);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleFormChange = (e) => { 
+    setFormData({
+      ...formData,
+      [`${e.target.id}`]: e.target.value
+    });
+  }
+
+  const handleFormSubmit = async (e) => { 
+    e.preventDefault();
+    await dispatch(LoginUser(formData));
+    navigate("/");
+  }
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-full max-w-md">
-        <form className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+        <form
+          className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4"
+          onChange={handleFormChange}
+          onSubmit={handleFormSubmit}
+        >
           <h2 className="text-2xl font-bold mb-6">Login</h2>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
-              Username
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
+              Email
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="Enter your username"
+              id="email"
+              type="email"
+              placeholder="Enter your Email"
             />
           </div>
           <div className="mb-6">
@@ -32,7 +61,7 @@ function Login() {
           <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
+              type="submit"
             >
               Sign In
             </button>
