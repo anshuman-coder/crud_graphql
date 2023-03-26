@@ -10,5 +10,9 @@ module.exports = {
   cars: {
     schema: require("./schema/cars.schema"),
     rootValue: require("./rootValues/cars.root")
+  },
+  file: {
+    schema: require("./schema/file.schema"),
+    rootValue: require("./rootValues/file.root")
   }
 };
