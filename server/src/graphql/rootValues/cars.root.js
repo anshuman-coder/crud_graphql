@@ -49,13 +49,21 @@ module.exports = {
       return error;
     }
   },
-  editCar: async ({ id, data }) => { 
+  editCar: async ({ id, data }) => {
     try {
       const result = await carFuncs.editCar(id, data);
 
       return result;
     } catch (error) {
       return error
+    }
+  },
+  deleteCar: async ({ id }) => { 
+    try {
+      const data = await carFuncs.deleteCar(id);
+      return data;
+    } catch (error) {
+      return error;
     }
   }
 }

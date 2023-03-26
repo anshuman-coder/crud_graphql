@@ -124,3 +124,9 @@ exports.editCar = async (id, data) => {
 
   return updatedValue;
 }
+
+exports.deleteCar = async (id) => { 
+  const result = await Cars.findByIdAndDelete(id);
+
+  return result;
+}
